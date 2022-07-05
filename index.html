@@ -1,0 +1,43 @@
+<html>
+  <head>
+    <title>
+      Daily Check-in Redirect
+    </title>
+  </head>
+  <body>
+    <p>JavaScript must be enabled for this auto-redirect trick to work.</p>
+    <p id="errorIntro"></p>
+    <p id="error"></p>
+    <script>
+      let dciRedirect = function() {
+        let processJson = function(json) {
+          let posts = json["data"]["children"];
+          let titleMatcher = new RegExp(/Daily Check.in for/, "i");
+          let dci = posts.find((post) => { return titleMatcher.test(post["data"]["title"]) });
+          let dciUrl = dci["data"]["url"];
+          window.location = dciUrl;
+        }
+
+        let checkResponse = function(response) {
+          if (!response.ok) {
+            throw new Error("Failed to fetch JSON");
+          }
+          return(response.json());
+        }
+
+        fetch("https://www.reddit.com/r/stopdrinking.json").then(checkResponse, dciError).then(processJson, dciError)
+      }
+
+      let dciError = function(error) {
+        document.getElementById("errorInfo").innerHTML = "Something has gone wrong.  Please message the SD mods and pass along the following error message:";
+        document.getElementById("error").innerHTML = error.message + "\n" + error.stack;
+      }
+
+      try {
+        dciRedirect();
+      } catch(error) {
+        dciError(error);
+      }
+    </script>
+  </body>
+</html>
