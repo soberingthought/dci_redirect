@@ -6,6 +6,7 @@
   </head>
   <body>
     <p>JavaScript must be enabled for this auto-redirect trick to work.</p>
+    <p>If something goes wrong, you can always <a href="https://www.reddit.com/r/stopdrinking/search?q=flair%3ACheck-In&restrict_sr=on&sort=new&t=all&limit=1">find the DCI at the top of this list</a></p>
     <p id="errorIntro"></p>
     <p id="error"></p>
     <script>
@@ -30,7 +31,7 @@
 
       let dciError = function(error) {
         document.getElementById("errorInfo").innerHTML = "Something has gone wrong.  Please message the SD mods and pass along the following error message:";
-        document.getElementById("error").innerHTML = error.message + "\n" + error.stack;
+        document.getElementById("error").innerHTML = error.message + "\n<br>\n" + error.stack;
       }
 
       try {
